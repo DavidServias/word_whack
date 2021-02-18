@@ -1,0 +1,13 @@
+{
+    "Stories": [
+        {"title":  "The Story of Your Mom",
+        "text": "This is the story of your mom. Your mom is many things to many people. To some she is a <noun>, because she never fails to <verb>, when it really matters. Many would describe your mom as <adjective>. Perhaps it's because she once held a(n) <object> in her <singular body part> for <number> <unit of time plural>. Others have noted that your mom has never said a negative word about anyone (except for the time that she described your father's <plural body parts> as <adjective> and <adjective>). At the end of the day, after all she's accomplished in this world, your mom still manages to stay <adjective> not matter what happens. To some she is a hero, but she would be the first to say that, just like you and me, she puts her <article of clothing plural> on, one <singular body part> at a time."
+        }
+
+        ],
+}
+
+
+}, """
+
+my_title = ""
