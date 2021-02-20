@@ -1,8 +1,7 @@
 import re
 import json
-import os
-import random
-import subprocess
+from gtts import gTTS
+from playsound import playsound
 
 
 # story class
@@ -15,6 +14,17 @@ class Story:
         self.prompts = re.findall("<[\w\s]+>", self.text)
         self.user_input = []
 
+    def insert_user_input(self):
+        if len(self.user_input) > 0:
+            new_text = self.text
+            temp_input = self.user_input
+            for prompt in self.prompts:
+                # replace each occurrence of prompt with first item on temp_input list
+                new_text = re.sub(prompt, temp_input[0], new_text, 1)
+                # remove first item of temp_input list
+                del temp_input[0]
+            self.text = new_text
+
     # gets a response from the user for each prompt, and saves it in user_input list.
     def get_user_input(self):
         print(messages["user_input_prompt"])
@@ -22,28 +32,18 @@ class Story:
             prompt += ": "
             response = input(prompt)
             self.user_input.append(response)
-
-    def insert_user_input(self):
-        if len(self.user_input) > 0:
-            new_text = self.text
-            temp_input = self.user_input
-            for prompt in self.prompts:
-                # replace one ocadsf
-                # currence of prompt with first item on temp_input list
-                new_text = re.sub(prompt, temp_input[0], new_text, 1)
-                # remove first item of temp_input list
-                del temp_input[0]
-            self.text = new_text
-
-    def print_story(self):
-        print(self.title,)
-        print(self.text)
+        self.insert_user_input()
 
     def speak_story(self):
-        subprocess.call(["python", "Speech.py", self.text])
+        split_text = self.text.split(". ")
+        # Language in which you want to convert
+        language = 'en'
 
-        #  os.system("python Speech.py")
-        #  To do: use "subprocess" instead.
+        for line in split_text:
+            print(line + ".")
+            speech_audio = gTTS(text=line, lang=language, slow=False)
+            speech_audio.save("speech_audio.mp3")
+            playsound('speech_audio.mp3')
 
 
 def get_story():
@@ -61,6 +61,4 @@ messages = {
 
 my_story = get_story()
 my_story.get_user_input()
-my_story.insert_user_input()
-my_story.print_story()
 my_story.speak_story()
