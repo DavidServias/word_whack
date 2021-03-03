@@ -40,7 +40,12 @@ class Story:
         split_text = self.text.split(". ")
         # Language in which you want to convert
         language = 'en'
-
+        # speak title
+        print(self.title)
+        speech_audio = gTTS(text=self.title, lang=language, slow=False)
+        speech_audio.save("speech_audio.mp3")
+        playsound('speech_audio.mp3')
+        # speak text
         for line in split_text:
             print(line + ".")
             speech_audio = gTTS(text=line, lang=language, slow=False)
